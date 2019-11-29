@@ -1,0 +1,3 @@
+3a4,5
+> #define T_SMALL 4  //Small file
+> #define T_SFDIR 5  //Directory of Small File

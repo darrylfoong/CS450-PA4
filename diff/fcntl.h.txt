@@ -1,0 +1,2 @@
+4a5
+> #define O_SMALL   0x400

@@ -1,0 +1,63 @@
+86a87
+>   readsb(dev, &sb);
+225d225
+< 
+306a307
+>     //memmove(ip->data, dip->data, sizeof(ip->data));
+413a415,424
+>   if(ip->type == T_SMALL){
+>     for(i = 0; i <= NDIRECT; i++){
+>       ip->addrs[i] = 0;
+>     }
+> 
+>     ip->size = 0;
+>     iupdate(ip);
+>     return;
+>   }
+> 
+468a480,485
+>   // Small Files
+>   if(ip->type == T_SMALL) {
+>      memmove(dst, (void*)ip->addrs + off, n);
+>      return n;
+>   } 
+>     
+474c491
+<   }
+---
+>   } 
+493c510
+<   if(off > ip->size || off + n < off)
+---
+>   if(off > ip->size || off + n < off){
+495c512,514
+<   if(off + n > MAXFILE*BSIZE)
+---
+>   }
+> 
+>   if(off + n > MAXFILE*BSIZE){
+496a516,529
+>   }
+> 
+>   if (ip->type == T_SMALL) {
+>     if(off + n > (NDIRECT+1)*4){
+>       n = (NDIRECT+1) * 4 - off;
+>      }
+>     
+>     memmove((void*)ip->addrs + off, src, n); 
+>     if(n > 0 && ip->size < (off + n)) {
+>       ip->size = off + n;
+>       iupdate(ip);
+>     }
+>     return n;
+>   } 
+530c563
+<   if(dp->type != T_DIR)
+---
+>   if(dp->type != T_DIR && dp->type != T_SFDIR){
+531a565
+>   }
+636c670
+<     if(ip->type != T_DIR){
+---
+>     if(ip->type != T_DIR && ip->type != T_SFDIR){

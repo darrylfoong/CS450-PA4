@@ -1,0 +1,4 @@
+95a96
+> extern int sys_mksfdir(void); //Show visibility of mksfdir syscall
+127a129
+> [SYS_mksfdir] sys_mksfdir, //Pointing to mksfdir syscall
